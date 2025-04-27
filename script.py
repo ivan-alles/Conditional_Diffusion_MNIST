@@ -312,7 +312,13 @@ def train_mnist():
     save_model = False
     save_dir = './data/diffusion_outputs10/'
     os.makedirs(save_dir, exist_ok=True)
-    ws_test = [0.0, 0.5, 2.0] # strength of generative guidance
+    ws_test = [
+        -1.0 # 100% unconditional
+        -0.5, # 50% unconditional, 50% conditional
+         0.0, # 100% conditional
+         0.5, # superconditional :-)
+         2.0  # hyperconditional :-) :-)
+    ]
 
     ddpm = DDPM(nn_model=ContextUnet(in_channels=1, n_feat=n_feat, n_classes=n_classes), betas=(1e-4, 0.02), n_T=n_T, device=device, drop_prob=0.1)
     ddpm.to(device)
